@@ -2,7 +2,7 @@ require('dotenv').config()
 const app = require('./index')
 const mongoose = require('mongoose')
 
-const port = 3000
+const port = 3001;
 
 mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
   if(err){
