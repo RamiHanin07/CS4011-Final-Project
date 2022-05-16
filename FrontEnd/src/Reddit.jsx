@@ -6,7 +6,7 @@ const Reddit = () =>{
     const [posts, setPosts] = useState([])
     const titleRef = React.createRef();
     const bodyRef = React.createRef();
-    const idRef = React.createRef();
+    var inputID;
     
 
     const getPosts = async () => {
@@ -30,17 +30,29 @@ const Reddit = () =>{
     }
 
     const deletePost = async() => {
-        var id = idRef.current.value
+        var id = inputID;
         await superagent.post(`http://localhost:3001/delete?id=` + id)
         getPosts()
     }
 
     const editPost = async() => {
-        var id = idRef.current.value
+        var id = inputID;
         var body = bodyRef.current.value
         var title = titleRef.current.value
-        await superagent.post(`http://localhost:3001/edit?id=` + id + `&body=` + body + `&title=` + title)
+
+        if(body == "" && title != ""){
+            await superagent.post(`http://localhost:3001/edit?id=` + id + `&title=` + title)
+        }else if(body != "" && title == ""){
+            await superagent.post(`http://localhost:3001/edit?id=` + id + `&body=` + body)
+        }else if(body != "" && title != ""){
+            await superagent.post(`http://localhost:3001/edit?id=` + id + `&body=` + body + `&title=` + title)
+        }
         getPosts()
+    }
+
+    function loadID(id) {
+        console.log(id);
+        inputID = id;
     }
 
     useEffect(() => {
@@ -50,16 +62,32 @@ const Reddit = () =>{
 
 
     return (
-        <div>
+        <div
+        style ={{
+            backgroundColor: "white",
+            border: "5px solid",
+            margin: "0px 500px 0px 500px"
+
+        }}>
             {
-                <table border = '1'>
+                <table border = '.5' align = "center" width = "700px" display = "flex">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Body</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {
                             posts.map(post => {
                                 return (
-                                    <tr>
-                                        <td>{post._id}</td>
-                                        <td>{post.title}</td>
+                                    <tr tabindex ={0}>
+                                        <td width = "20%" align = "center"> 
+                                            <button onClick={() => {
+                                                loadID(post._id);
+                                                }}>{post.title}
+                                            </button>
+                                        </td>
                                         <td>{post.body}</td>
                                     </tr>
                                 )
@@ -68,7 +96,8 @@ const Reddit = () =>{
                     </tbody>
                 </table>
             }
-            <table>
+            
+            <table align = "center">
                 <tbody>
                     <tr>
                         <td>
@@ -86,19 +115,14 @@ const Reddit = () =>{
                             </label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <label>
-                                ID:
-                                <input type="text" ref={idRef} />
-                            </label>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
-            <button onClick={createPost}>Post</button>
-            <button onClick={deletePost}>Delete</button>
-            <button onClick={editPost}>Edit</button>
+            <div align = "center">
+                <button onClick={createPost}>Post</button>
+                <button onClick={deletePost}>Delete</button>
+                <button onClick={editPost}>Edit</button>
+            </div>
+            
         </div>
     )
 }

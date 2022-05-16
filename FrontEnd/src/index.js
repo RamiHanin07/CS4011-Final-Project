@@ -4,7 +4,11 @@ import Reddit from './Reddit'
 
 const AppContainer = () => {
   return (
-    <div>
+    <div
+        style ={{
+          backgroundColor: "lightGray"
+          
+        }}>
       <Reddit/>
     </div>
   )

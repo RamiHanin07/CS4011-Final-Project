@@ -13,16 +13,16 @@ Just explaining how this should work based on the guidelines indicated on the "F
 
 
 3) Some way to edit an existing blog post
-    - Copy the ID of the post you want to alter (the first column) into the "ID" text box.
+    - Press the Title of the post you wish to edit
     - Fill in either/both of the "Body" or "Title" text box with the new body or title.
     - Press the "Edit" button
 
 4) Some way to delete a blog post
-    - Copy the ID of the post you want to delete (the first column) into the "ID" text box.
+    - Press the Title of the post you wish to edit
     - Press the "Delete" button
 
 5) At minimum, each post must have a title and text
-    - Each post has a title, text, and an ID.
+    - Each post has a title, text
 
 6) After creation, edit, or deletion, the UI must update automatically to show all of the current blog posts.
     - It does!
