@@ -40,11 +40,11 @@ const Reddit = () =>{
         var body = bodyRef.current.value
         var title = titleRef.current.value
 
-        if(body == "" && title != ""){
+        if(body === "" && title !== ""){
             await superagent.post(`http://localhost:3001/edit?id=` + id + `&title=` + title)
-        }else if(body != "" && title == ""){
+        }else if(body !== "" && title === ""){
             await superagent.post(`http://localhost:3001/edit?id=` + id + `&body=` + body)
-        }else if(body != "" && title != ""){
+        }else if(body !== "" && title !== ""){
             await superagent.post(`http://localhost:3001/edit?id=` + id + `&body=` + body + `&title=` + title)
         }
         getPosts()
@@ -54,6 +54,7 @@ const Reddit = () =>{
         console.log(id);
         inputID = id;
     }
+
 
     useEffect(() => {
         getPosts()
@@ -70,26 +71,33 @@ const Reddit = () =>{
 
         }}>
             {
-                <table border = '.5' align = "center" width = "700px" display = "flex">
+                <table border = ".5" align = "center" width = "700px" display = "flex">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Body</th>
+                            <th>Posts</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             posts.map(post => {
                                 return (
-                                    <tr tabindex ={0}>
-                                        <td width = "20%" align = "center"> 
-                                            <button onClick={() => {
-                                                loadID(post._id);
-                                                }}>{post.title}
-                                            </button>
-                                        </td>
-                                        <td>{post.body}</td>
-                                    </tr>
+                                    <React.Fragment>
+                                        <tr>
+                                            <td width = "20%" align = "center"> 
+                                                <button onClick={() => {
+                                                    loadID(post._id);
+                                                    }}>{post.title}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width = "20%" align = "center">
+                                                {post.body}
+                                            </td>
+                                        </tr>
+                                        <br></br>
+                                        <br></br>
+                                    </React.Fragment>
                                 )
                             })
                         }

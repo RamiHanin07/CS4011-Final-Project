@@ -7,7 +7,6 @@ const AppContainer = () => {
     <div
         style ={{
           backgroundColor: "lightGray"
-          
         }}>
       <Reddit/>
     </div>
